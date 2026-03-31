@@ -7,13 +7,43 @@
 <section class="articles">
     <h2 class="articles__heading">Latest Posts</h2>
     <ul class="article-ul">
+        <% data.forEach(post => { %> 
         <li>
-            <a href="#">
-                <span>Post Title</span>
-                <span class="article-list__date">Date</span>
+            <a href="/post/<%= post._id %>">
+                <span><%= post.title %></span>
+                <span class="article-list__date"><%= post.createdAt.toDateString() %></span>
             </a>
         </li>
+        <% }) %>
     </ul>
-    
-    <a href="#" class="pagination">&lt; View Older Posts</a>
+
+    <div class="pagination-container">
+    <% if (previousPage) { %>
+        <a href="/?page=<%= previousPage %>" class="pagination">&lt; View Newer Posts</a>
+    <% } %>
+
+    <% 
+        let totalPages = Math.ceil(count / perPage);
+        for (let i = 1; i <= totalPages; i++) { 
+            if (i === 1 || i === totalPages || (i >= current - 1 && i <= current + 1)) { 
+    %>
+        <% if (i === current) { %>
+            <span class="page current"><%= i %></span>
+        <% } else { %>
+            <a href="/?page=<%= i %>" class="page"><%= i %></a>
+        <% } %>
+    <% 
+            } else if (i === 2 && current > 3) { 
+    %>
+        <span class="dots">…</span>
+    <% } else if (i === totalPages - 1 && current < totalPages - 2) { %>
+        <span class="dots">…</span>
+    <% } %>
+    <% } %>
+
+    <% if (nextPage) { %>
+        <a href="/?page=<%= nextPage %>" class="pagination">View Older Posts &gt;</a>
+    <% } %>
+</div>
+
 </section>

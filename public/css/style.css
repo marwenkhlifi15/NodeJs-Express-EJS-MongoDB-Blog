@@ -327,14 +327,37 @@ img {
 }
 
 
-.pagination {
-  font-size: 1.3rem;
-  color: var(--gray);
-  text-decoration: none;
+.pagination-container {
+  display: flex;
+  justify-content: center; /* centre tout horizontalement */
+  gap: 8px; /* espace entre chaque élément */
   margin-top: 40px;
-  display: inline-block;
+  flex-wrap: wrap;
 }
 
-.pagination:hover {
+.pagination, .page, .dots {
+  font-size: 1rem;
+  color: var(--gray);
+  text-decoration: none;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  transition: all 0.2s;
+}
+
+.pagination:hover, .page:hover {
   color: var(--black);
+  background-color: #f0f0f0;
+}
+
+.page.current {
+  font-weight: bold;
+  background-color: var(--gray-light);
+  pointer-events: none; /* désactive le clic */
+}
+
+.dots {
+  border: none;
+  background: none;
+  cursor: default;
 }
