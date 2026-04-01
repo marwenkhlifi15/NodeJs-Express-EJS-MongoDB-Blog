@@ -12,7 +12,7 @@ router.get('', async (req, res) => {
       title: "NodeJs Blog",
       description: "Simple Blog created with NodeJs, Express & MongoDb."
     };
-    let perPage = 10;
+    let perPage = 7;
     let page = parseInt(req.query.page) || 1;
 
     const data = await Post.aggregate([{ $sort:{ createdAt: -1 }}])
@@ -34,7 +34,8 @@ router.get('', async (req, res) => {
       previousPage: hasPreviousPage ? previousPage : null,
       currentRoute: '/',
       count, 
-      perPage
+      perPage,
+      currentRoute: '/'
     });
 
   } catch (error) {
@@ -59,7 +60,7 @@ router.get('/post/:id', async (req, res) => {
       };
 
 
-      res.render('post', {locals, data}); 
+      res.render('post', {locals, data, currentRoute: `/post/${slug}` }); 
     } catch (error) {
       console.log(error);
     }
@@ -108,12 +109,10 @@ router.get('/about', (req, res) => {
 
 
 
-router.get('/about', (req, res) => {
-    res.render('about');
-});
-
 router.get('/contact', (req, res) => {
-    res.render('contact');
+    res.render('contact',{
+      currentRoute: '/contact'
+    });
 });
 
 module.exports = router;
